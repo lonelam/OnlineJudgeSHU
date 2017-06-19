@@ -16,6 +16,7 @@ define("pager", ["avalon"], function (avalon) {
         $init: function (vm, el) {
             vm._getFirstPage = function () {
                 if (vm.currentPage > 1) {
+                    vm.currentPage = 1;
                     vm.getPage(1);
                 }
             };
@@ -33,6 +34,7 @@ define("pager", ["avalon"], function (avalon) {
             };
             vm._getLastPage = function () {
                 if (vm.currentPage + 1 < vm.totalPage) {
+                    vm.currentPage = vm.totalPage;
                     vm.getPage(vm.totalPage);
                 }
             };
