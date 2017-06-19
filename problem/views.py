@@ -445,6 +445,6 @@ def problem_list_page(request, page=1):
     return render(request, "oj/problem/problem_list.html",
                   {"problems": current_page, "page": int(page),
                    "previous_page": previous_page, "next_page": next_page,
-                   "first_page":1, "last_page": paginator.count(),
+                   "first_page":1, "last_page": paginator.count,
                    "keyword": keyword, "tag": tag_text,
                    "tags": tags, "difficulty_order": difficulty_order})
