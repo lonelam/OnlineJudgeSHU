@@ -51,7 +51,7 @@ class EditContestSerializer(serializers.Serializer):
     end_time = serializers.DateTimeField()
     groups = serializers.ListField(child=serializers.IntegerField(), required=False, default=[])
     visible = serializers.BooleanField()
-    problems = serializers.CharField()
+    problems = serializers.CharField(required=False)
 
 
 class ContestProblemSampleSerializer(serializers.ListField):
