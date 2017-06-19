@@ -1,6 +1,7 @@
-# OnlineJudge [![Build Status](https://travis-ci.org/QingdaoU/OnlineJudge.svg?branch=master)](https://travis-ci.org/QingdaoU/OnlineJudge)
+# OnlineJudge
+Thanks to @virusdefender. The SHU OnlineJudge System is based on [QDUOJ](https://github.com/QingdaoU/OnlineJudge)
 
-由于作者工作学习繁忙, 目前只能保证有时间的时候修复部分BUG。
+Because of the close of original reposity, now using this repo to simplify the develop progress.
 
 部分相关的组件已经开源, 可以参考。
 
@@ -28,9 +29,6 @@ License: The Star And Thank Author License
 
 交流QQ群: https://github.com/QingdaoU/OnlineJudge/wiki/QQ群
 
-TODO：
-
- - 完善测试
 
 ![](http://7xk96g.com1.z0.glb.clouddn.com/oj-preview/FireShot%20Capture%2028%20-%20%E9%A2%98%E7%9B%AE%E5%88%97%E8%A1%A8%20-%20https___qduoj.com_problems_.png)
 
