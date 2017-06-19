@@ -9,12 +9,13 @@ define("pager", ["avalon"], function (avalon) {
         " <button ms-class=\"{{ currentPage==totalPage?'btn btn-primary disabled':'btn btn-primary' }}\" ms-click=\"_getLastPage\">尾页</button>",
         currentPage: 1,
         totalPage: 1,
+        _getFirstPage: _interface,
         _getPrevPage: _interface,
         _getNextPage: _interface,
+        _getLastPage: _interface,
         $init: function (vm, el) {
             vm._getFirstPage = function () {
                 if (vm.currentPage > 1) {
-
                     vm.getPage(1);
                 }
             };
@@ -30,9 +31,9 @@ define("pager", ["avalon"], function (avalon) {
                     vm.getPage(vm.currentPage);
                 }
             };
-            vm._getNextPage = function () {
+            vm._getLastPage = function () {
                 if (vm.currentPage + 1 < vm.totalPage) {
-                    vm.getPage(vm.totalPage - 1);
+                    vm.getPage(vm.totalPage);
                 }
             };
         },
