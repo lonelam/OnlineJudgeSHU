@@ -73,6 +73,7 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert", "csrfToken", "date
             vm.startTime = "";
             vm.endTime = "";
             vm.password = "";
+            vm.problems = "";
             vm.isGlobal = true;
             vm.allGroups = [];
             vm.showGlobalViewRadio = true;
@@ -87,6 +88,7 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert", "csrfToken", "date
                 startTime: "",
                 endTime: "",
                 password: "",
+                problems: "",
                 isGlobal: true,
                 allGroups: [],
                 showGlobalViewRadio: true,
