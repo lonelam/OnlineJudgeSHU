@@ -26,7 +26,7 @@ class CreateProblemSerializer(serializers.Serializer):
     samples = ProblemSampleSerializer()
     test_case_id = serializers.CharField(max_length=40)
     time_limit = serializers.IntegerField(min_value=1, max_value=10000)
-    memory_limit = serializers.IntegerField(min_value=16)
+    memory_limit = serializers.IntegerField(min_value=2)
     spj = serializers.BooleanField()
     spj_language = serializers.IntegerField(required=False, default=None)
     spj_code = serializers.CharField(required=False, default=None)
