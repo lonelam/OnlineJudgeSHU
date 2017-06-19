@@ -137,7 +137,7 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert", "csrfToken", "date
                                         vm.title = contest.title;
                                         avalon.vmodels.contestDescriptionEditor.content = contest.description;
                                         vm.visible = contest.visible;
-                                        vm.problems = contest.problems
+                                        vm.problems = ""
                                         vm.realTimeRank = contest.real_time_rank;
                                         vm.startTime = contest.start_time.substring(0, 16).replace("T", " ");
                                         vm.endTime = contest.end_time.substring(0, 16).replace("T", " ");
