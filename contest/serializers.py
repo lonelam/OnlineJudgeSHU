@@ -18,7 +18,7 @@ class CreateContestSerializer(serializers.Serializer):
     end_time = serializers.DateTimeField()
     groups = serializers.ListField(child=serializers.IntegerField(), required=False, default=[])
     visible = serializers.BooleanField()
-    problems = serializers.CharField(required=False, default=None)
+    problems = serializers.CharField(required=False, default=None, allow_blank=True)
 
 
 class DateTimeLocal(serializers.DateTimeField):
@@ -51,7 +51,7 @@ class EditContestSerializer(serializers.Serializer):
     end_time = serializers.DateTimeField()
     groups = serializers.ListField(child=serializers.IntegerField(), required=False, default=[])
     visible = serializers.BooleanField()
-    problems = serializers.CharField(required=False, default=None)
+    problems = serializers.CharField(required=False, default=None, allow_blank=True)
 
 
 class ContestProblemSampleSerializer(serializers.ListField):
