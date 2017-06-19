@@ -206,6 +206,8 @@ class ContestAdminAPIView(APIView):
             #try:
             problem_list = data["problems"]
             problem_list = problem_list.split(',')
+            contest_problem_list = ContestProblem.objects.filter(contest=contest, visible=True).select_related(
+                "contest").order_by("sort_index")
             if len(problem_list) > 26:
                 return error_response(u"太多题目啦，添加失败")
             sort_id = 'A'
@@ -264,6 +266,14 @@ class ContestAdminAPIView(APIView):
                             is_public=True
                             )
                 sort_id = chr(ord(sort_id) + 1)
+            for existed_problem in contest_problem_list:
+                existed_problem.sort_index = str(sort_id)
+                if sort_id == 'Z':
+                    sort_id = 0;
+                elif sort_id.isalpha():
+                    sort_id = chr(ord(sort_id) + 1)
+                else:
+                    sort_id += 1
             contest.save()
             #except:
             #    contest.save()
