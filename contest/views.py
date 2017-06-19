@@ -210,7 +210,7 @@ class ContestAdminAPIView(APIView):
             #try:
             problem_list = data["problems"]
             problem_list = problem_list.split(',')
-            if problem_list >= 26:
+            if len(problem_list) > 26:
                 return error_response(u"太多题目啦，添加失败")
             sort_id = 'A'
             for problem_id in problem_list:
