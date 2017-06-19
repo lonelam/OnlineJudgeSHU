@@ -205,7 +205,7 @@ class ContestAdminAPIView(APIView):
             #把题目逐个加入，如果已经存在对应contestproblem，那就创建title不同的备份
             #try:
             problem_list = data["problems"]
-            if problem_list == None:
+            if problem_list == None or problem_list == "":
                 contest.save()
                 return success_response(ContestSerializer(contest).data)
             problem_list = problem_list.split(',')
