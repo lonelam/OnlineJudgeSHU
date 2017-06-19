@@ -4,7 +4,7 @@
 {% endblock %}
 {% block body %}
     {% load problem %}
-    <div class="container main" ms-controller="problemList">
+    <div class="container main">
         <div class="row">
             <div class="col-md-9 col-lg-9">
                 <div class="row">
@@ -50,16 +50,21 @@
                         </tbody>
                     </table>
                     <nav>
-                        <ms:pager $id="problemPager" config="pager"></ms:pager>
                         <ul class="pager">
                             {% if previous_page %}
                                 <li class="previous"><a
                                         href="/problems/{{ previous_page }}/{% if keyword %}?keyword={{ keyword }}{% endif %}{% if tag %}?tag={{ tag }}{% endif %}">
                                     <span aria-hidden="true">&larr;</span> 上一页</a></li>
+                                <li class="previous"><a
+                                        href="/problems/{{ first_page }}/{% if keyword %}?keyword={{ keyword }}{% endif %}{% if tag %}?tag={{ tag }}{% endif %}">
+                                    <span aria-hidden="true">&larr;</span> 第一页</a></li>
                             {% endif %}
                             {% if next_page %}
                                 <li class="next"><a
                                         href="/problems/{{ next_page }}/{% if keyword %}?keyword={{ keyword }}{% endif %}{% if tag %}?tag={{ tag }}{% endif %}">下一页 <span
+                                        aria-hidden="true">&rarr;</span></a></li>
+                                <li class="next"><a
+                                        href="/problems/{{ last_page }}/{% if keyword %}?keyword={{ keyword }}{% endif %}{% if tag %}?tag={{ tag }}{% endif %}">最后一页 <span
                                         aria-hidden="true">&rarr;</span></a></li>
                             {% endif %}
                         </ul>
