@@ -7,6 +7,7 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert", "csrfToken", "date
                 e.preventDefault();
                 var ajaxData = {
                     title: vm.title,
+			problems:vm.problems,
                     description: avalon.vmodels.contestDescriptionEditor.content,
                     contest_type: 0,
                     real_time_rank: vm.realTimeRank,
