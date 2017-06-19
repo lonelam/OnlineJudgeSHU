@@ -11,6 +11,9 @@ while i:
         conn = MySQLdb.connect(host=os.environ["MYSQL_PORT_3306_TCP_ADDR"],
                                user=os.environ["MYSQL_ENV_MYSQL_USER"],
                                passwd=os.environ["MYSQL_ENV_MYSQL_ROOT_PASSWORD"])
+	conn.cursor().execute("drop database if exists oj")
+	conn.cursor().execute("drop database if exists oj_submission")
+	
         conn.cursor().execute("create database if not exists oj default character set utf8;")
         conn.cursor().execute("create database if not exists oj_submission default character set utf8;")
         print "Create database successfully"
