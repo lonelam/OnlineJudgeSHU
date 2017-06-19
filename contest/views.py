@@ -205,6 +205,9 @@ class ContestAdminAPIView(APIView):
             #把题目逐个加入，如果已经存在对应contestproblem，那就创建title不同的备份
             #try:
             problem_list = data["problems"]
+            if problem_list == None:
+                contest.save()
+                return success_response(ContestSerializer(contest).data)
             problem_list = problem_list.split(',')
             contest_problem_list = ContestProblem.objects.filter(contest=contest, visible=True).select_related(
                 "contest").order_by("sort_index")
@@ -268,6 +271,7 @@ class ContestAdminAPIView(APIView):
                 sort_id = chr(ord(sort_id) + 1)
             for existed_problem in contest_problem_list:
                 existed_problem.sort_index = str(sort_id)
+                existed_problem.save()
                 if sort_id == 'Z':
                     sort_id = 0;
                 elif sort_id.isalpha():
