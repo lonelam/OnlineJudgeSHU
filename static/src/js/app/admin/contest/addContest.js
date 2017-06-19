@@ -7,7 +7,7 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert", "csrfToken", "date
                 e.preventDefault();
                 var ajaxData = {
                     title: vm.title,
-			problems:vm.problems,
+			        problems:vm.problems,
                     description: avalon.vmodels.contestDescriptionEditor.content,
                     contest_type: 0,
                     real_time_rank: vm.realTimeRank,
@@ -41,7 +41,8 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert", "csrfToken", "date
                     bsAlert("你没有选择参赛用户!");
                     return false;
                 }
-                if (ajaxData.description.trim() == "") {
+
+                if (ajaxData.description.trim() === "") {
                     bsAlert("比赛描述不能为空!");
                     return false;
                 }
