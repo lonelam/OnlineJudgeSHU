@@ -10,16 +10,6 @@ template_release_path = "template/release/"
 static_src_path = "static/src/"
 static_release_path = "static/release/"
 
-print "Begin to compress js"
-if os.system("node static/src/js/r.js -o static/src/js/build.js"):
-    print "Failed to compress js, exit"
-    exit()
-
-try:
-    # 删除模板的 release 文件夹
-    shutil.rmtree(template_release_path)
-except Exception:
-    pass
 # 复制一份模板文件夹到 release
 shutil.copytree(template_src_path, template_release_path)
 
