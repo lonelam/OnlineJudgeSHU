@@ -107,25 +107,36 @@ class ContestAdminAPIView(APIView):
                                                                         is_public=True
                                                                         )
                     else:
-                        contest_problem = ContestProblem.objects.create(
-                            title=linked_problem.title + '(' + contest.title + ')',
-                            description=linked_problem.description,
-                            input_description=linked_problem.input_description,
-                            output_description=linked_problem.output_description,
-                            test_case_id=linked_problem.test_case_id,
-                            samples=linked_problem.samples,
-                            time_limit=linked_problem.time_limit,
-                            memory_limit=linked_problem.memory_limit,
-                            spj=linked_problem.spj,
-                            spj_language=linked_problem.spj_language,
-                            spj_code=linked_problem.spj_code,
-                            spj_version=linked_problem.spj_version,
-                            created_by=request.user,
-                            hint=linked_problem.hint,
-                            contest=contest,
-                            sort_index=sort_id,
-                            is_public=True
-                            )
+                        is_include = False
+                        for preproblems in titled:
+                            if preproblems.contest == contest:
+                                is_include = True
+                                break
+                        if not is_include:
+                            titled = ContestProblem.objects.filter(
+                                title=linked_problem.title + '(' + contest.title + ')')
+                            if titled.count():
+                                is_include = True
+                        if not is_include:
+                            contest_problem = ContestProblem.objects.create(
+                                title=linked_problem.title + '(' + contest.title + ')',
+                                description=linked_problem.description,
+                                input_description=linked_problem.input_description,
+                                output_description=linked_problem.output_description,
+                                test_case_id=linked_problem.test_case_id,
+                                samples=linked_problem.samples,
+                                time_limit=linked_problem.time_limit,
+                                memory_limit=linked_problem.memory_limit,
+                                spj=linked_problem.spj,
+                                spj_language=linked_problem.spj_language,
+                                spj_code=linked_problem.spj_code,
+                                spj_version=linked_problem.spj_version,
+                                created_by=request.user,
+                                hint=linked_problem.hint,
+                                contest=contest,
+                                sort_index=sort_id,
+                                is_public=True
+                                )
                     sort_id = chr(ord(sort_id) + 1)
                 contest.save()
             except:
@@ -228,7 +239,17 @@ class ContestAdminAPIView(APIView):
                                                                         is_public=True
                                                                         )
                     else:
-                        contest_problem = ContestProblem.objects.create(title=linked_problem.title + '('+contest.title + ')',
+                        is_include = False
+                        for preproblems in titled:
+                            if preproblems.contest == contest:
+                                is_include = True
+                                break
+                        if not is_include:
+                            titled = ContestProblem.objects.filter(title=linked_problem.title+ '('+contest.title + ')')
+                            if titled.count():
+                                is_include = True
+                        if not is_include:
+                            contest_problem = ContestProblem.objects.create(title=linked_problem.title + '('+contest.title + ')',
                                                                         description=linked_problem.description,
                                                                         input_description=linked_problem.input_description,
                                                                         output_description=linked_problem.output_description,
