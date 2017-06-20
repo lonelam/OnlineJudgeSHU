@@ -60,7 +60,7 @@
                                     <span aria-hidden="true">&larr;</span> 上一页</a></li>
                             {% endif %}
                             {% for pageid in pagelist %}
-                                <li class="pagetags" {% if pageid == page %} style="background-color : cornsilk" {% endif %}><a
+                                <li class="pagetags"><a  {% if pageid == page %} style="background-color : cornsilk" {% endif %}
                                         href="/problems/{{ pageid }}/{% if keyword %}?keyword={{ keyword }}{% endif %}{% if tag %}?tag={{ tag }}{% endif %}">
                                     {{ pageid }}</a></li>
                             {% endfor %}
