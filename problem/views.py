@@ -427,6 +427,9 @@ def problem_list_page(request, page=1):
         return error_page(request, u"不存在的页码")
 
     previous_page = next_page = None
+    pageid_from = max(0, current_page.number - 5)
+    pageid_to = min(current_page.number + 6, paginator.num_pages)
+    pagelist = range(pageid_from, pageid_to)
 
     try:
         previous_page = current_page.previous_page_number()
@@ -441,10 +444,10 @@ def problem_list_page(request, page=1):
     # 右侧标签列表 按照关联的题目的数量排序 排除题目数量为0的
     tags = ProblemTag.objects.annotate(problem_number=Count("problem")).filter(problem_number__gt=0).order_by(
         "-problem_number")
-
     return render(request, "oj/problem/problem_list.html",
                   {"problems": current_page, "page": int(page),
                    "previous_page": previous_page, "next_page": next_page,
                    "first_page":1, "last_page": paginator.num_pages,
                    "keyword": keyword, "tag": tag_text,
-                   "tags": tags, "difficulty_order": difficulty_order})
+                   "tags": tags, "difficulty_order": difficulty_order,
+                   "pagelist": pagelist})
