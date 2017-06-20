@@ -427,8 +427,8 @@ def problem_list_page(request, page=1):
         return error_page(request, u"不存在的页码")
 
     previous_page = next_page = None
-    pageid_from = max(0, current_page.number - 5)
-    pageid_to = min(current_page.number + 6, paginator.num_pages)
+    pageid_from = max(1, current_page.number - 5)
+    pageid_to = min(current_page.number + 6, paginator.num_pages + 1)
     pagelist = range(pageid_from, pageid_to)
 
     try:
