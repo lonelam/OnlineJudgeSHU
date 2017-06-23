@@ -46,6 +46,8 @@ docs/_build/
 *~
 #db file
 db.db
+#vs files
+.vs/
 #vim cache
 *swp
 *swo
