@@ -116,6 +116,15 @@
         }
         .sdtitle{
             position:relative;
+
+        }
+        #sdlogo{
+            height: 200px;
+        }
+        .sdlogo-back{
+            position:relative;
+            background-color:white;
+            filter:opacity(50%);
         }
     </style>
     <link rel="stylesheet" href="/static/css/animate/animate.css">
@@ -159,9 +168,11 @@
         <div class="index-section-text animated bounceInUp">
             <h1>{% show_website_info "website_name" %}</h1>
             <div class="backboard"></div>
+            <div class="sdlogo-back">
+                <img id="sdlogo" src="/static/img/sdlogo.png" />
+            </div>
             <h3 class="sdtitle">“盛大游戏杯”第15届上海大学程序设计联赛夏季赛暨上海高校金马五校赛</h3>
             <h3 href="/static/file/enrollment.xlsx">报名中...</h3>
-            <img src="/static/img/sdlogo.png" />
             <a href="/announcement/3/">点击详情...</a>
         </div>
         <div class="bottom-pointer">↓继续滚动~</div>
