@@ -40,6 +40,7 @@ class CreateProblemSerializer(serializers.Serializer):
 class ProblemTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProblemTag
+        fields = '__all__'
 
 
 class BaseProblemSerializer(serializers.ModelSerializer):
