@@ -58,7 +58,7 @@ class BaseProblemSerializer(serializers.ModelSerializer):
 class ProblemSerializer(BaseProblemSerializer):
     class Meta:
         model = Problem
-
+        fields = '__all__'
 
 class OpenAPIProblemSerializer(BaseProblemSerializer):
 

@@ -38,7 +38,7 @@ class ContestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contest
-
+        fields='__all__'
 
 class EditContestSerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -87,7 +87,7 @@ class ContestProblemSerializer(serializers.ModelSerializer):
     class ContestSerializer(serializers.ModelSerializer):
         class Meta:
             model = Contest
-            fields = ["title", "id"]
+            fields = ["title", "id" ]
 
     samples = JSONField()
     contest = ContestSerializer()
@@ -95,7 +95,7 @@ class ContestProblemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContestProblem
-
+        #fields = '__all__'
 
 class EditContestProblemSerializer(serializers.Serializer):
     id = serializers.IntegerField()

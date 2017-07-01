@@ -11,7 +11,6 @@ class CreateAnnouncementSerializer(serializers.Serializer):
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
-
     class UserSerializer(serializers.ModelSerializer):
         class Meta:
             model = User
@@ -21,7 +20,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Announcement
-
+        fields = '__all__'
 
 class EditAnnouncementSerializer(serializers.Serializer):
     id = serializers.IntegerField()
