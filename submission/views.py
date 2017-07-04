@@ -303,11 +303,7 @@ def submission_list_page(request, page=1):
             user = User.objects.get(id=user_id)
             cache_result["user"][user_id] = user
         item["user"] = cache_result["user"][user_id]
-
-        if item["user_id"] == request.user.id:
-            item["show_link"] = True
-        else:
-            item["show_link"] = False
+        item["show_link"] = True
 
     previous_page = next_page = None
     try:
