@@ -238,7 +238,6 @@ class SubmissionAdminAPIView(APIView):
         return paginate(request, submissions, SubmissionSerializer)
 
 
-@login_required
 def submission_list_page(request, page=1):
     """
     所有提交的列表页

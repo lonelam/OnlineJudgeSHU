@@ -53,7 +53,7 @@
             <tr>
                 <th scope="row">
                     {% if item.show_link %}
-                        <a href="/submission/{{ item.id }}/">{{ forloop.counter |add:start_id }}</a>
+                        <a href="/submission/{{ item.id }}/">{{ item.id }}</a>
                     {% else %}
                         {{ forloop.counter |add:start_id }}
                     {% endif %}
