@@ -249,7 +249,7 @@ def submission_list_page(request, page=1):
 
     # url中如果存在user_id参数,说明只显示这个人的提交,忽略其他参数
     user_id = request.GET.get("user_id", None)
-    if user_id and request.user.is_superuser():
+    if user_id:
         submission_filter["user_id"] = user_id
         submissions = Submission.objects.filter(user_id=user_id, contest_id__isnull=True)
     else:
@@ -296,7 +296,7 @@ def submission_list_page(request, page=1):
             problem = Problem.objects.get(id=problem_id)
             cache_result["problem"][problem_id] = problem.title
         item["title"] = cache_result["problem"][problem_id]
-        item["sort_id"] = submission_size - iterno - paginator.per_page * (int(page) - 1)
+        item["sort_id"] = submission_size - iterno - paginator.per_page * (int(page)-1)
 
         user_id = item["user_id"]
         if user_id not in cache_result["user"]:
@@ -304,7 +304,7 @@ def submission_list_page(request, page=1):
             cache_result["user"][user_id] = user
         item["user"] = cache_result["user"][user_id]
 
-        if item["user_id"] == request.user.id or request.user.is_superuser():
+        if item["user_id"] == request.user.id:
             item["show_link"] = True
         else:
             item["show_link"] = False
@@ -331,7 +331,7 @@ class SubmissionShareAPIView(APIView):
     def post(self, request):
         serializer = SubmissionhareSerializer(data=request.data)
         if serializer.is_valid():
-            submission_id = serializer.data["submission_id"]()
+            submission_id = serializer.data["submission_id"]
             try:
                 result = _get_submission(submission_id, request.user)
             except Submission.DoesNotExist:
