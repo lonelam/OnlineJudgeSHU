@@ -281,6 +281,7 @@ def submission_list_page(request, page=1):
         submissions = submissions.filter(result=int(result))
         submission_filter["result"] = result
 
+    submission_size = len(submissions)
     paginator = Paginator(submissions, 20)
     try:
         submissions = paginator.page(int(page))
@@ -289,7 +290,6 @@ def submission_list_page(request, page=1):
 
     # 因为提交页面经常会有重复的题目和用户，缓存一下查询结果
     cache_result = {"problem": {}, "user": {}}
-    submission_size = len(submissions)
     for iterno, item in enumerate(submissions):
         problem_id = item["problem_id"]
         if problem_id not in cache_result["problem"]:
