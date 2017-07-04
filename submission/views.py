@@ -289,12 +289,14 @@ def submission_list_page(request, page=1):
 
     # 因为提交页面经常会有重复的题目和用户，缓存一下查询结果
     cache_result = {"problem": {}, "user": {}}
-    for item in submissions:
+    submission_size = len(submissions)
+    for iterno, item in enumerate(submissions):
         problem_id = item["problem_id"]
         if problem_id not in cache_result["problem"]:
             problem = Problem.objects.get(id=problem_id)
             cache_result["problem"][problem_id] = problem.title
         item["title"] = cache_result["problem"][problem_id]
+        item["sort_id"] = submission_size - iterno
 
         user_id = item["user_id"]
         if user_id not in cache_result["user"]:
