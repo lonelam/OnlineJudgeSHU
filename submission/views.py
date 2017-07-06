@@ -238,7 +238,6 @@ class SubmissionAdminAPIView(APIView):
         return paginate(request, submissions, SubmissionSerializer)
 
 
-@login_required
 def submission_list_page(request, page=1):
     """
     所有提交的列表页
@@ -250,7 +249,7 @@ def submission_list_page(request, page=1):
 
     # url中如果存在user_id参数,说明只显示这个人的提交,忽略其他参数
     user_id = request.GET.get("user_id", None)
-    if user_id and request.user.admin_type == SUPER_ADMIN:
+    if user_id:
         submission_filter["user_id"] = user_id
         submissions = Submission.objects.filter(user_id=user_id, contest_id__isnull=True)
     else:
@@ -282,6 +281,7 @@ def submission_list_page(request, page=1):
         submissions = submissions.filter(result=int(result))
         submission_filter["result"] = result
 
+    submission_size = len(submissions)
     paginator = Paginator(submissions, 20)
     try:
         submissions = paginator.page(int(page))
@@ -290,23 +290,20 @@ def submission_list_page(request, page=1):
 
     # 因为提交页面经常会有重复的题目和用户，缓存一下查询结果
     cache_result = {"problem": {}, "user": {}}
-    for item in submissions:
+    for iterno, item in enumerate(submissions):
         problem_id = item["problem_id"]
         if problem_id not in cache_result["problem"]:
             problem = Problem.objects.get(id=problem_id)
             cache_result["problem"][problem_id] = problem.title
         item["title"] = cache_result["problem"][problem_id]
+        item["sort_id"] = submission_size - iterno + paginator.per_page * (int(page)-1)
 
         user_id = item["user_id"]
         if user_id not in cache_result["user"]:
             user = User.objects.get(id=user_id)
             cache_result["user"][user_id] = user
         item["user"] = cache_result["user"][user_id]
-
-        if item["user_id"] == request.user.id or request.user.admin_type == SUPER_ADMIN:
-            item["show_link"] = True
-        else:
-            item["show_link"] = False
+        item["show_link"] = True
 
     previous_page = next_page = None
     try:
