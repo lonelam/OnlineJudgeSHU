@@ -637,7 +637,7 @@ def contest_rank_page(request, contest_id):
                   {"rank": rank, "contest": contest,
                    "contest_problems": contest_problems,
                    "auto_refresh": request.GET.get("auto_refresh", None) == "true",
-                   "show_real_name": request.GET.get("show_real_name", None) == "true",
+                   "show_real_name": request.GET.get("show_real_name", None) == "true" or request.user.admin_type == SUPER_ADMIN,
                    "force_real_time_rank": force_real_time_rank})
 
 

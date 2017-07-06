@@ -49,13 +49,15 @@
                             <tr>
                                 <th scope="row">{% if item.rank_number %}{{ item.rank_number }}{% else %}-{% endif %}</th>
                                 <td>
+                                {% if show_real_name %}
+                                    {{ item.userprofile.studentid }}
+                                {% endif %}
                                 <a href="/contest/{{ contest.id }}/submissions/?user_id={{ item.user__id }}">
                                     {{ item.user__username }}
                                 </a>
                                     {% if show_real_name %}
                                         （{{ item.user__real_name }}）
                                     {% endif %}
-
                                     {% if force_real_time_rank %}
                                         （{{ item.user__real_name }}）
                                     {% endif %}
