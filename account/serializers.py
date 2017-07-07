@@ -24,7 +24,7 @@ class UserRegisterSerializer(serializers.Serializer):
     school = serializers.CharField(max_length=200, required=False, default=None)
     password = serializers.CharField(max_length=30, min_length=6)
     email = serializers.EmailField(max_length=254)
-    captcha = serializers.CharField(max_length=7, min_length=4)
+    captcha = serializers.CharField(max_length=4, min_length=4)
     student_id = serializers.CharField(max_length=15, required=False, default=None)
 
 
