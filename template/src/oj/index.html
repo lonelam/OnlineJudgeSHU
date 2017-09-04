@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 {% load website_info %}
 <head>
@@ -86,7 +86,7 @@
 
         .index-section-text {
             position: absolute;
-            top: 20%;
+            top: 30%;
             width: 100%;
             text-align: center;
         }
@@ -99,14 +99,7 @@
             max-height: 300px;
             max-width: 300px;
         }
-        .icon#img1{
-            float:left;
-        }
-        @media screen and (orientation: portrait){
-            .icon#img1{
-                height:0;
-            }
-        }
+
         .section{
             background-size: cover;
         }
@@ -115,36 +108,7 @@
             background-image: url(/static/img/index/bg/bg.jpg);
             padding: 0 0 0 0;
         }
-        .backboard{
-            background-color: black;
-            padding-top:136px;
-            margin-bottom:-152px;
-            filter:opacity(50%);
-        }
-        .sdtitle{
-            position:relative;
 
-        }
-        #sdlogo{
-            height: 128px;
-            position:relative;
-            float:left;
-            z-index: 1;
-        }
-        .sdlogo-back{
-            position:relative;
-            padding-left:28%;
-            /*background-color:white;*/
-            /*filter:opacity(50%);*/
-        }
-        .text-column{
-            float:left;
-        }
-        @media screen and (orientation: portrait){
-            .text-column{
-                margin-left:15%;
-            }
-        }
     </style>
     <link rel="stylesheet" href="/static/css/animate/animate.css">
 
@@ -186,80 +150,40 @@
     <div class="section" id="section0">
         <div class="index-section-text animated bounceInUp">
             <h1>{% show_website_info "website_name" %}</h1>
-            <div class="backboard"></div>
-            <h3 class="sdtitle">“盛大游戏杯”第15届上海大学程序设计联赛夏季赛暨上海高校金马五校赛</h3>
-            <div class="sdlogo-back">
-                <h4 style="float:left">赞助商</h4>
-                <img id="sdlogo" src="/static/img/sdlogo.png" href="https://www.sdo.com"/>
-            </div>
-            <h3 class="sdtitle" ><a href="/contest/{{ cid }}">进入比赛</a></h3>
-            <div class="backboard"></div>
-            <h4 class="sdtitle"><a href="/announcement/3/" >点击详情(内附报名表)...</a></h4>
+
+            <h3>如果再来一次，我还要打ACM~</h3>
         </div>
-        <div class="bottom-pointer">↓奖项设置/竞赛组织~</div>
+        <div class="bottom-pointer">↓继续滚动~</div>
     </div>
     <div class="section" id="section1">
 
         <div class="section-text">
-            <div class="text-column">
-                <h1>组织机构</h1>
-                <h3>主  办：上海大学学工办<br>
-                    上海大学教务处<br>
-                    承  办：上海大学计算机工程与科学学院<br>
-                    赞助商：盛大游戏<img id="sdlogo" src="/static/img/sdlogo.png" href="https://www.sdo.com"/><br>
-                    协  办：上海大学计算中心<br>
-                    上海大学信息办<br>
-                    上海大学计算机学院团委<br>
-                    上海大学计算机学院学生会<br>
-                    上海大学计算机学院研究生联合会<br>
-                    金马五校组委会<br>
-                </h3>
-            </div>
             <img class="icon" id="img1" src="/static/img/index/a.png">
-            <div class="text-column">
-                <h1>组委会组成名单</h1>
-                <h3>赛事组委会</h3><br>
-                    主　任：徐　旭<br>
-                    副主任：郭毅可、胡大伟、彭章友<br>许华虎、郭纯生、顾谷丰（盛大游戏）<br>
-                    成　员：徐学良、吴　蔚、顾爱军、陈章进<br>张博锋、韩　晶、李　青、周维民<br>沈云付、钱文鑫、顾凤敏（盛大游戏）<br>
-                    <h3>专家委员会</h3><br>
-                    主　任：张博锋<br>
-                    委　员：沈云付、叶晨（同济）、肖春云（华师）<br>罗勇军（华理）、朱国进（东华）、张玉柱（盛大游戏）<br>李　青、李卫民、沈　俊<br>
-            </div>
+
+            <h1>思考</h1>
+
+            <h3>遇到问题先想想~~</h3>
         </div>
-        <div class="bottom-pointer">↓奖项设置~</div>
+
     </div>
     <div class="section" id="section2">
+
         <div class="section-text">
             <img class="icon" id="img2" src="/static/img/index/c.png">
-             <h3><table style="margin:auto"><tr>
-                <tr>
-                    <th>奖项</th><th>数量</th><th>奖金</th>
-                </tr>
-                <tr>
-                    <td>冠军</td><td>1</td><td>2000</td>
-                </tr>
-                <tr>
-                    <td>亚军</td><td>1</td><td>1500</td>
-                </tr>
-                <tr>
-                    <td>季军</td><td>1</td><td>1000</td>
-                </tr>
-            </table></h3>
-            <h3>巨额奖金等你来拿哦~~<br>
-                <a href="http://acmoj.shu.edu.cn/announcement/4/" style="color:blue">点击众多其他奖项...</a></h3>
+
+            <h1>想通了</h1>
+
+            <h3>灵光一闪思路现</h3>
         </div>
     </div>
     <div class="section" id="section3">
 
         <div class="section-text">
-            <img class="icon" id="img3" src="/static/img/index/m.png"
-                 about="粗犷大气的排版，原版照抄的首页，究竟是谁制作？请收看：一个被当作苦力的ACM队员">
+            <img class="icon" id="img3" src="/static/img/index/m.png">
 
             <h1>AC</h1>
 
             <h3>完成代码 AC</h3>
-
         </div>
     </div>
 </div>
