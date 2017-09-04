@@ -557,7 +557,12 @@ def contest_list_page(request, page=1):
     所有比赛的列表页
     """
     # 正常情况
-    contests = Contest.objects.filter(visible=True).order_by("-create_time")
+    contests = None
+    if request.user.admin_type == SUPER_ADMIN:
+        constests = Contest.objects.filter().order_by("-create_time")
+    else:
+        constests = Contest.objects.filter(visible=True).order_by("-create_time")
+
 
     # 搜索的情况
     keyword = request.GET.get("keyword", "").strip()
