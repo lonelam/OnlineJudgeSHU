@@ -75,13 +75,8 @@ def logout(request):
 
 
 def index_page(request):
-    warmup = Contest.objects.get(id=26);
-    cid = 26
-    if warmup.status == CONTEST_ENDED:
-        cid = 27
-    return render(request, "oj/index.html", {"cid": cid})
     if not request.user.is_authenticated():
-        return render(request, "oj/index.html", {"cid": 27})
+        return render(request, "oj/index.html")
 
     if request.META.get('HTTP_REFERER') or request.GET.get("index"):
         return render(request, "oj/index.html")

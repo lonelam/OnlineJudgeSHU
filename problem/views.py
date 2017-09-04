@@ -205,7 +205,7 @@ class TestCaseUploadAPIView(APIView):
 
     def _is_legal_test_case_file_name(self, file_name):
         # 正整数开头的 .in 或者.out 结尾的
-        regex = r"^[1-9]\d*\.(in|out)$"
+        regex = r"^\w*\.(in|out)$"
         return re.compile(regex).match(file_name) is not None
 
     def post(self, request):
@@ -215,6 +215,9 @@ class TestCaseUploadAPIView(APIView):
         f = request.FILES["file"]
 
         tmp_zip = "/tmp/" + rand_str() + ".zip"
+        if os.name == 'nt':
+            tmp_zip = "C:\\Temp\\" + rand_str() + ".zip"
+
         try:
             with open(tmp_zip, "wb") as test_case_zip:
                 for chunk in f:
@@ -249,13 +252,13 @@ class TestCaseUploadAPIView(APIView):
             # 否则就应该是spj的测试用例
             spj = True
 
+#文件检查之后改写文件名
         if not spj:
             if len(name_list) % 2 == 1:
                 return error_response(u"测试用例文件格式错误，文件数目为奇数")
-
-            for index in range(1, len(name_list) / 2 + 1):
-                if not (str(index) + ".in" in name_list and str(index) + ".out" in name_list):
-                    return error_response(u"测试用例文件格式错误，缺少" + str(index) + u".in/.out文件")
+            for fname in name_list:
+                if not (os.path.splitext(fname)[0] + ".in" in name_list and os.path.splitext(fname)[0] + ".in" in name_list):
+                    return error_response(u"测试用例文件格式错误，缺少" + os.path.splitext(fname)[0] + u".in/.out文件")
             test_case_number = len(name_list) / 2
         else:
             for index in range(1, len(name_list) + 1):
@@ -265,11 +268,12 @@ class TestCaseUploadAPIView(APIView):
 
         problem_test_dir = rand_str()
         test_case_dir = os.path.join(settings.TEST_CASE_DIR, problem_test_dir)
-
+        # if os.name == 'nt':
+        #     test_case_dir = '"'+test_case_dir+'"'
         # 得到了合法的测试用例文件列表 然后去解压缩
         os.mkdir(test_case_dir)
-        for name in name_list:
-            f = open(os.path.join(test_case_dir, name), "wb")
+        for i, name in enumerate(name_list):
+            f = open(os.path.join(test_case_dir, str(i/2 + 1) + ('.out' if i & 1 else '.in')), "wb")
             try:
                 f.write(test_case_file.read(name).replace("\r\n", "\n"))
             except MemoryError:

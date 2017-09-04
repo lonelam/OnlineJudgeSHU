@@ -181,6 +181,9 @@ CELERY_TASK_SERIALIZER = "json"
 DATABASE_ROUTERS = ['oj.db_router.DBRouter']
 
 TEST_CASE_DIR = os.path.join(BASE_DIR, 'test_case/')
+if os.name == 'nt':
+    TEST_CASE_DIR = os.path.join(BASE_DIR, 'test_case\\')
+
 
 IMAGE_UPLOAD_DIR = os.path.join(BASE_DIR, 'upload/')
 
