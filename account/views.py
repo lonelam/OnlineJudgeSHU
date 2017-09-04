@@ -8,6 +8,7 @@ from django.contrib import auth
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.db import IntegrityError
 from django.conf import settings
 from django.http import HttpResponse
 from django.core.exceptions import MultipleObjectsReturned
@@ -24,14 +25,15 @@ from utils.otp_auth import OtpAuth
 from .tasks import _send_email
 
 from .decorators import login_required
-from .models import User, UserProfile
+from .models import User, UserProfile, UserPrefix, UserPrefixRelation
 
 from .serializers import (UserLoginSerializer, UserRegisterSerializer,
                           UserChangePasswordSerializer,
                           UserSerializer, EditUserSerializer,
                           ApplyResetPasswordSerializer, ResetPasswordSerializer,
                           SSOSerializer, EditUserProfileSerializer,
-                          UserProfileSerializer, TwoFactorAuthCodeSerializer)
+                          UserProfileSerializer, TwoFactorAuthCodeSerializer,
+                          UserPrefixSerializer)
 
 from .decorators import super_admin_required
 from contest.models import Contest, CONTEST_ENDED
@@ -82,6 +84,48 @@ def index_page(request):
         return render(request, "oj/index.html")
     else:
         return http.HttpResponseRedirect('/problems/')
+
+class UserGenerateAPIView(APIView):
+    @super_admin_required
+    def post(self, request):
+        """
+        批量生成用户json API接口
+        """
+        serializer = UserPrefixSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            try:
+                pref = UserPrefix.objects.get(prefixname = data["prefixname"])
+            except:
+                pref = UserPrefix.objects.create(prefixname = data["prefixname"])
+            pref.amount = data['amount']
+            output = []
+            for i in range(data["amount"]):
+                username = "%s%03d" % (data["prefixname"], i)
+                password = rand_str(6)
+                email = "%03d@%s.temp" %(i, data["prefixname"])
+                try:
+                    user = User.objects.get(username=username)
+                    user.set_password(password)
+                except User.DoesNotExist:
+                    pass
+                try:
+                    user = User.objects.get(email = email)
+                except MultipleObjectsReturned:
+                    continue
+                except User.DoesNotExist:
+                    user = User.objects.create(username=username, real_name=username, email=email)
+                    user.set_password(password)
+                    user.save()
+                    UserProfile.objects.create(user=user, school="unknown",student_id = 9527)
+                try:
+                    UserPrefixRelation.objects.create(user=user, prefix = pref)
+                except IntegrityError:
+                    pass
+                output.append(user)
+            return success_response(render(request, "oj/account/output.html", {"output": output}))
+        else:
+            return serializer_invalid_response(serializer)
 
 
 class UserRegisterAPIView(APIView):
@@ -185,7 +229,6 @@ class EmailCheckAPIView(APIView):
             except Exception:
                 return Response(status=does_not_existed)
         return Response(status=does_not_existed)
-
 
 class UserAdminAPIView(APIView):
     @super_admin_required

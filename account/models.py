@@ -16,7 +16,6 @@ REGULAR_USER = 0
 ADMIN = 1
 SUPER_ADMIN = 2
 
-
 class User(AbstractBaseUser):
     # 用户名
     username = models.CharField(max_length=30, unique=True)
@@ -53,6 +52,19 @@ class User(AbstractBaseUser):
     class Meta:
         db_table = "user"
 
+#用于批量添加用户的prefix头以便日后管理
+class UserPrefix(models.Model):
+    childrens = models.ManyToManyField(User, through="UserPrefixRelation")
+    prefixname = models.CharField(max_length=10, unique=True)
+    amount = models.IntegerField(default=0)
+    class Meta:
+        db_table = "prefix"
+class UserPrefixRelation(models.Model):
+    prefix = models.ForeignKey(UserPrefix)
+    user = models.ForeignKey(User)
+    class Meta:
+        db_table = "user_prefix_relation"
+        unique_together = ("prefix", "user")
 
 def _random_avatar():
     import random

@@ -1,8 +1,11 @@
 # coding=utf-8
 from rest_framework import serializers
 
-from .models import User, UserProfile
+from .models import User, UserProfile, UserPrefix
 
+class UserPrefixSerializer(serializers.Serializer):
+    prefixname = serializers.CharField(max_length=10)
+    amount = serializers.IntegerField(min_value=1, max_value=999)
 
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=30)

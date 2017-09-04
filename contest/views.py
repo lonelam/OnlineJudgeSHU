@@ -558,11 +558,10 @@ def contest_list_page(request, page=1):
     """
     # 正常情况
     contests = None
-    if request.user.admin_type == SUPER_ADMIN:
-        contests = Contest.objects.all().order_by("-create_time")
-    else:
+    if request.user.id == None or request.user.admin_type != SUPER_ADMIN:
         contests = Contest.objects.filter(visible=True).order_by("-create_time")
-
+    else:
+        contests = Contest.objects.all().order_by("-create_time")
 
     # 搜索的情况
     keyword = request.GET.get("keyword", "").strip()

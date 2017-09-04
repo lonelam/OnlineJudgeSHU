@@ -1,0 +1,29 @@
+<div ms-controller="userAdd" class="col-md-9">
+    <h1>用户批量添加</h1>
+
+    <div class="right">
+        <form class="form-inline" onsubmit="return false;">
+            <div class="form-group-sm">
+                <label>前缀生成</label>
+                <input name="keyword" class="form-control" placeholder="请输入前缀" ms-duplex="prefix">
+                <label>数量</label>
+                <input name="amount" class = "form-control-static" placeholder="请输入一个合理的值(1~999)" ms-duplex="amount">
+                <input type="submit" value= "generate" class="btn btn-primary" ms-click="generate()">
+            </div>
+        </form>
+        <br>
+    </div>
+    <form class="form-group">
+        <table class="table table-striped">
+            <tr>
+                <th>ID</th>
+                <th>用户名</th>
+                <th>真实姓名</th>
+                <th>电子邮箱</th>
+            </tr>
+        </table>
+        <input type="text" name="user_info">
+        <input class = "btn btn-primary" type="submit" name="generate2">
+    </form>
+</div>
+<script src="/static/js/app/admin/user/userAdd.js"></script>
