@@ -7,7 +7,8 @@ from account.views import (UserLoginAPIView, UsernameCheckAPIView, UserRegisterA
                            UserChangePasswordAPIView, EmailCheckAPIView,
                            UserAdminAPIView, UserInfoAPIView, ResetPasswordAPIView,
                            ApplyResetPasswordAPIView, SSOAPIView, UserProfileAPIView,
-                           TwoFactorAuthAPIView, AvatarUploadAPIView, UserGenerateAPIView)
+                           TwoFactorAuthAPIView, AvatarUploadAPIView, UserGenerateAPIView,
+                           UserLoadAPIView)
 
 from announcement.views import AnnouncementAdminAPIView
 
@@ -60,6 +61,7 @@ urlpatterns = [
     url(r'^api/admin/contest/$', ContestAdminAPIView.as_view(), name="contest_admin_api"),
     url(r'^api/admin/user/$', UserAdminAPIView.as_view(), name="user_admin_api"),
     url(r'^api/admin/gen/$', UserGenerateAPIView.as_view(), name="user_generate_api"),
+    url(r'^api/admin/upd/$', UserLoadAPIView.as_view(), name="user_load_api"),
     url(r'^api/admin/group/$', GroupAdminAPIView.as_view(), name="group_admin_api"),
     url(r'^api/admin/group_member/$', GroupMemberAdminAPIView.as_view(), name="group_member_admin_api"),
     url(r'^api/admin/group/promot_as_admin/$', GroupPrometAdminAPIView.as_view(), name="group_promote_admin_api"),

@@ -13,17 +13,22 @@
         </form>
         <br>
     </div>
-    <form class="form-group">
-        <table name="outtable" class="table table-striped">
+    <table name="outtable" class="table table-striped">
             <tr>
                 <th>ID</th>
                 <th>用户名</th>
                 <th>密码</th>
                 <th>电子邮箱</th>
             </tr>
-        </table>
+    </table>
+    <form class = "form-inline">
+        <label>生成格式1：用户名 密码</label>
+        <label>后台没有很好地进行错误检查！所以请保证输入正确性，空格、回车和Tab是用户名和密码之间的分隔符</label>
+        <textarea name="area1" style="width: 100%;height: 250px;" ms-duplex="updata"/>
+        <input type="submit" value = "upload" class = "btn btn-primary" ms-click = "upload()">
+    </form>
+    <p>其他格式以后再写啦，麻烦死了</p>
         <input type="text" name="user_info">
         <input class = "btn btn-primary" type="submit" name="generate2">
-    </form>
 </div>
 <script src="/static/js/app/admin/user/userAdd.js"></script>

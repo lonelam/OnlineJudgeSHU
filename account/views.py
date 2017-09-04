@@ -84,6 +84,42 @@ def index_page(request):
         return render(request, "oj/index.html")
     else:
         return http.HttpResponseRedirect('/problems/')
+class UserLoadAPIView(APIView):
+    @super_admin_required
+    def post(self, request):
+        """
+        批量导入用户json api接口
+        """
+        text = request.data["updata"]
+        nodes = text.split()
+        UserSet = set()
+        output = []
+        for i in range(len(nodes)):
+            if i & 1:
+                UserSet.add((nodes[i - 1], nodes[i]))
+        for userdata in UserSet:
+            username = userdata[0]
+            password = userdata[1]
+            email = userdata[0] + "@acmoj.temp"
+            try:
+                user = User.objects.get(username=username)
+                user.set_password(password)
+                user.save()
+            except User.DoesNotExist:
+                pass
+            try:
+                user = User.objects.get(email = email)
+            except MultipleObjectsReturned:
+                continue
+            except User.DoesNotExist:
+                user = User.objects.create(username=username, real_name=username, email=email)
+                user.set_password(password)
+                user.save()
+                UserProfile.objects.create(user=user, school="unknown",student_id = 9527)
+            user.tps = password
+            output.append(user)
+        rendered = render(request, "oj/account/output.html", {"output": output})
+        return success_response({"content":rendered.content})
 
 class UserGenerateAPIView(APIView):
     @super_admin_required
