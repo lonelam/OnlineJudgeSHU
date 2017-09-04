@@ -559,7 +559,7 @@ def contest_list_page(request, page=1):
     # 正常情况
     contests = None
     if request.user.admin_type == SUPER_ADMIN:
-        constests = Contest.objects.filter().order_by("-create_time")
+        constests = Contest.objects.all().order_by("-create_time")
     else:
         constests = Contest.objects.filter(visible=True).order_by("-create_time")
 
