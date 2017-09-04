@@ -107,6 +107,7 @@ class UserGenerateAPIView(APIView):
                 try:
                     user = User.objects.get(username=username)
                     user.set_password(password)
+                    user.save()
                 except User.DoesNotExist:
                     pass
                 try:
@@ -122,8 +123,10 @@ class UserGenerateAPIView(APIView):
                     UserPrefixRelation.objects.create(user=user, prefix = pref)
                 except IntegrityError:
                     pass
+                user.tps = password
                 output.append(user)
-            return success_response(render(request, "oj/account/output.html", {"output": output}))
+            rendered = render(request, "oj/account/output.html", {"output": output})
+            return success_response({"content":rendered.content})
         else:
             return serializer_invalid_response(serializer)
 

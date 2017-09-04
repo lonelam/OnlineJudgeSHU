@@ -23,11 +23,12 @@ require(["jquery", "avalon", "csrfToken", "bsAlert", "pager", "validator"],
                             data: {"prefixname": vm.prefix, "amount": vm.amount},
                             success: function(data)
                             {
-                                if (!data.code){
-                                    vm.userList = data.data.results;
+                                if (data.code){
+                                    bsAlert(data.data);
                                 }
                                 else{
-                                    bsAlert(data.data)
+                                    var outtable = document.getElementsByName("outtable")[0];
+                                    outtable.innerHTML += data.data.content;
                                 }
                             }
                         })
