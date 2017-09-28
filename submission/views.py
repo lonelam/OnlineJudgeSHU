@@ -25,7 +25,7 @@ from .serializers import (CreateSubmissionSerializer, SubmissionSerializer,
                           SubmissionhareSerializer, SubmissionRejudgeSerializer,
                           CreateContestSubmissionSerializer, OpenAPICreateSubmissionSerializer,
                           OpenAPISubmissionSerializer)
-
+import datetime
 logger = logging.getLogger("app_info")
 
 
@@ -137,7 +137,7 @@ class ContestSubmissionAPIView(APIView):
         request_serializer: CreateContestSubmissionSerializer
         """
         serializer = CreateContestSubmissionSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid() and datetime.datetime.now().hour >= 6:
             data = serializer.data
             contest = Contest.objects.get(id=data["contest_id"])
             try:
