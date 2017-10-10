@@ -357,7 +357,6 @@ class SubmissionRejudgeAdminAPIView(APIView):
                 submission = Submission.objects.get(id=submission_id, contest_id__isnull=True)
             except Submission.DoesNotExist:
                 return error_response(u"提交不存在")
-
             try:
                 problem = Problem.objects.get(id=submission.problem_id)
             except Problem.DoesNotExist:
