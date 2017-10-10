@@ -94,8 +94,7 @@ class JudgeDispatcher(object):
             self.release_judge_instance(judge_server.id)
 
             self.submission.judge_end_time = int(time.time() * 1000)
-            #self.submission.save(update_fields=["judge_start_time", "result", "info", "accepted_answer_time", "judge_end_time"])
-            self.save()
+            self.submission.save(update_fields=["judge_start_time", "result", "info", "accepted_answer_time", "judge_end_time"])
 
         if self.submission.contest_id:
             self.update_contest_problem_status()
