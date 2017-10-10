@@ -96,8 +96,9 @@ class ContestRank(models.Model):
         if not submission.contest_id or submission.contest_id != self.contest_id:
             raise ValueError("Error submission type")
 
-        if User.objects.get(id=submission.user_id).admin_type == SUPER_ADMIN:
+        if User.objects.get(user_id=submission.user_id).admin_type == SUPER_ADMIN:
             return
+
         if submission.result == result["system_error"]:
             logger.warning("submission " + submission.id + " result is system error, update rank operation is ignored")
             return
