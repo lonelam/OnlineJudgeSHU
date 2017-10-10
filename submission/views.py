@@ -379,7 +379,7 @@ class SubmissionRejudgeAdminAPIView(APIView):
             submission_id = serializer.data["submission_id"]
             # 目前只考虑前台公开题目的重新判题
             try:
-                submission = Submission.objects.get(id=submission_id, contest_id__isnull=True)
+                submission = Submission.objects.get(id=submission_id)
             except Submission.DoesNotExist:
                 return error_response(u"提交不存在")
 
