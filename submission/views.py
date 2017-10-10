@@ -39,10 +39,9 @@ def _submit_code(user, problem_id, language, code):
                          capacity=settings.TOKEN_BUCKET_DEFAULT_CAPACITY,
                          last_capacity=controller.last_capacity,
                          last_timestamp=controller.last_timestamp)
-    #special judge for 卷神
     if bucket.consume():
         controller.last_capacity -= 1
-    elif user.id != 2466:
+    else:
         return error_response(u"您提交的频率过快, 请等待%d秒" % int(bucket.expected_time() + 1))
 
     try:
@@ -231,6 +230,8 @@ def my_submission(request, submission_id):
                    "user": user, "can_share": result["can_share"], "website_base_url": settings.WEBSITE_INFO["url"]})
 
 
+
+
 class SubmissionAdminAPIView(APIView):
     @super_admin_required
     def get(self, request):
@@ -349,6 +350,31 @@ class SubmissionRejudgeAdminAPIView(APIView):
     @super_admin_required
     def post(self, request):
         serializer = SubmissionRejudgeSerializer(data=request.data)
+        if serializer.is_valid():
+            submission_id = serializer.data["submission_id"]
+            # 目前只考虑前台公开题目的重新判题
+            try:
+                submission = Submission.objects.get(id=submission_id, contest_id__isnull=True)
+            except Submission.DoesNotExist:
+                return error_response(u"提交不存在")
+
+            try:
+                problem = Problem.objects.get(id=submission.problem_id)
+            except Problem.DoesNotExist:
+                return error_response(u"题目不存在")
+            try:
+                _judge.delay(submission.id, problem.time_limit, problem.memory_limit, problem.test_case_id,
+                             problem.spj, problem.spj_language, problem.spj_code, problem.spj_version)
+            except Exception as e:
+                logger.error(e)
+                return error_response(u"提交判题任务失败")
+            return success_response(u"任务提交成功")
+        else:
+            return serializer_invalid_response(serializer)
+    #此处正在调试比赛题目的重判
+    @super_admin_required
+    def get(self, request):
+        serializer = SubmissionRejudgeSerializer(data=request.GET)
         if serializer.is_valid():
             submission_id = serializer.data["submission_id"]
             # 目前只考虑前台公开题目的重新判题
