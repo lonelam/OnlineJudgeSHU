@@ -4,7 +4,7 @@ import logging
 from django.db import models
 from django.utils.timezone import now
 
-from account.models import User
+from account.models import User, SUPER_ADMIN
 from problem.models import AbstractProblem
 from group.models import Group
 from utils.models import RichTextField
@@ -96,6 +96,8 @@ class ContestRank(models.Model):
         if not submission.contest_id or submission.contest_id != self.contest_id:
             raise ValueError("Error submission type")
 
+        if self.user.admin_type == SUPER_ADMIN:
+            return
         if submission.result == result["system_error"]:
             logger.warning("submission " + submission.id + " result is system error, update rank operation is ignored")
             return
