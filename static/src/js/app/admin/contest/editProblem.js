@@ -153,12 +153,12 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert",
                 vm.description = "";
                 vm.timeLimit = 1000;
                 vm.memoryLimit = 128;
-                vm.samples = [];
-                vm.hint = "";
+                vm.samples = [{input: "None", output: "None", "visible": true}];
+                vm.hint = "None";
                 vm.sortIndex = "";
                 vm.visible = true;
-                vm.inputDescription = "";
-                vm.outputDescription = "";
+                vm.inputDescription = "None";
+                vm.outputDescription = "None";
                 vm.testCaseId = "";
                 vm.testCaseList = [];
             }
