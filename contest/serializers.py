@@ -95,7 +95,7 @@ class ContestProblemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContestProblem
-        #fields = '__all__'
+        fields = '__all__'
 
 class EditContestProblemSerializer(serializers.Serializer):
     id = serializers.IntegerField()

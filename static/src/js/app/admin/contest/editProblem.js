@@ -106,11 +106,11 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert",
                     timeLimit: 1000,
                     memoryLimit: 128,
                     samples: [{input: "", output: "", "visible": true}],
-                    hint: "",
+                    hint: "None",
                     sortIndex: "",
                     visible: true,
-                    inputDescription: "",
-                    outputDescription: "",
+                    inputDescription: "None",
+                    outputDescription: "None",
                     testCaseId: "",
                     testCaseList: [],
 
@@ -154,11 +154,11 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert",
                 vm.timeLimit = 1000;
                 vm.memoryLimit = 128;
                 vm.samples = [];
-                vm.hint = "";
+                vm.hint = "None";
                 vm.sortIndex = "";
                 vm.visible = true;
-                vm.inputDescription = "";
-                vm.outputDescription = "";
+                vm.inputDescription = "None";
+                vm.outputDescription = "None";
                 vm.testCaseId = "";
                 vm.testCaseList = [];
             }
