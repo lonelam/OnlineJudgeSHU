@@ -4,6 +4,8 @@
     <div class="right">
         <form class="form-inline" onsubmit="return false;">
             <div class="form-group-sm">
+                <label>小组名</label>
+                <input name="groupname" class="form-control" placeholder="留空表示不添加小组" ms-duplex="groupname">
                 <label>前缀生成</label>
                 <input name="keyword" class="form-control" placeholder="请输入前缀" ms-duplex="prefix">
                 <label>数量</label>
@@ -27,8 +29,5 @@
         <textarea name="area1" style="width: 100%;height: 250px;" ms-duplex="updata"/>
         <input type="submit" value = "upload" class = "btn btn-primary" ms-click = "upload()">
     </form>
-    <p>其他格式以后再写啦，麻烦死了</p>
-        <input type="text" name="user_info">
-        <input class = "btn btn-primary" type="submit" name="generate2">
 </div>
 <script src="/static/js/app/admin/user/userAdd.js"></script>

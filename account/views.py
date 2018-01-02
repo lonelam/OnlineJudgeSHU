@@ -26,7 +26,7 @@ from .tasks import _send_email
 
 from .decorators import login_required
 from .models import User, UserProfile, UserPrefix, UserPrefixRelation
-
+from group.models import Group, UserGroupRelation
 from .serializers import (UserLoginSerializer, UserRegisterSerializer,
                           UserChangePasswordSerializer,
                           UserSerializer, EditUserSerializer,
@@ -130,6 +130,14 @@ class UserGenerateAPIView(APIView):
         serializer = UserPrefixSerializer(data=request.data)
         if serializer.is_valid():
             data = serializer.data
+            if data["groupname"] == "":
+                isGroup = False
+            else:
+                isGroup = True
+                try:
+                    tarGroup = Group.objects.get(name=data["groupname"])
+                except:
+                    tarGroup = Group.objects.create(name=data["groupname"], created_by=request.User)
             try:
                 pref = UserPrefix.objects.get(prefixname = data["prefixname"])
             except:
@@ -144,6 +152,8 @@ class UserGenerateAPIView(APIView):
                     user = User.objects.get(username=username)
                     user.set_password(password)
                     user.save()
+                    if isGroup:
+                        UserGroupRelation.objects.create(group=tarGroup, user=user)
                 except User.DoesNotExist:
                     pass
                 try:

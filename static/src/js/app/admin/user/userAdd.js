@@ -12,6 +12,7 @@ require(["jquery", "avalon", "csrfToken", "bsAlert", "pager", "validator"],
                     password : "",
                     username : "",
                     updata: "",
+                    groupname: "",
                     amount : 0,
                     userId: -1,
                     generate: function(){
@@ -21,7 +22,7 @@ require(["jquery", "avalon", "csrfToken", "bsAlert", "pager", "validator"],
                             url: url,
                             dataType: "json",
                             method: "post",
-                            data: {"prefixname": vm.prefix, "amount": vm.amount},
+                            data: {"prefixname": vm.prefix, "amount": vm.amount, "groupname": vm.groupname},
                             success: function(data)
                             {
                                 if (data.code){
