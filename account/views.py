@@ -137,7 +137,7 @@ class UserGenerateAPIView(APIView):
                 try:
                     tarGroup = Group.objects.get(name=data["groupname"])
                 except:
-                    tarGroup = Group.objects.create(name=data["groupname"], created_by=request.User)
+                    tarGroup = Group.objects.create(name=data["groupname"], created_by=request.user)
             try:
                 pref = UserPrefix.objects.get(prefixname = data["prefixname"])
             except:
