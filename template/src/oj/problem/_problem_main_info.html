@@ -1,25 +1,22 @@
 <div class="problem-section">
-    {% if fuckingProblem %}
+            {% if fuckingProblem %}
                 <label class="problem-label">描述</label>
-{% endif %}
+            {% endif %}
+
                 <div class="problem-detail">{{ problem.description|safe }}</div>
             </div>
+
             {% if fuckingProbelm %}
             <div class="problem-section">
                 <label class="problem-label">输入</label>
 
                 <p class="problem-detail">{{ problem.input_description|safe }}</p>
             </div>
-            {% endif %}
-
-            {% if fuckingProblem %}
             <div class="problem-section">
                 <label class="problem-label">输出</label>
 
                 <p class="problem-detail">{{ problem.output_description|safe }}</p>
             </div>
-            {% endif %}
-            {% if fuckingProblem %}
             {% for item in samples %}
                 <div class="problem-section">
                     <label class="problem-label">样例输入{{ forloop.counter }}</label>
@@ -34,4 +31,4 @@
 {{ item.output }}</pre>
                 </div>
             {% endfor %}
-{%  endif %}
+            {%  endif %}
