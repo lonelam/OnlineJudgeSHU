@@ -12,14 +12,14 @@
             </div>
             {% endif %}
 
-{% if fuckingProblem %}
+            {% if fuckingProblem %}
             <div class="problem-section">
                 <label class="problem-label">输出</label>
 
                 <p class="problem-detail">{{ problem.output_description|safe }}</p>
             </div>
-{% endif %}
-{% if fuckingProblem %}
+            {% endif %}
+            {% if fuckingProblem %}
             {% for item in samples %}
                 <div class="problem-section">
                     <label class="problem-label">样例输入{{ forloop.counter }}</label>
