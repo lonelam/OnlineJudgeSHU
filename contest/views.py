@@ -538,7 +538,9 @@ def contest_problem_page(request, contest_id, contest_problem_id):
                                                                "samples": json.loads(problem.samples),
                                                                "show_warning": show_warning,
                                                                "warning": warning,
-                                                               "show_submit_code_area": show_submit_code_area})
+                                                               "show_submit_code_area": show_submit_code_area,
+                                                               "inputIsNone": problem.input_description == "None"
+                                                               })
 
 
 @check_user_contest_permission
