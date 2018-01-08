@@ -539,8 +539,8 @@ def contest_problem_page(request, contest_id, contest_problem_id):
                                                                "show_warning": show_warning,
                                                                "warning": warning,
                                                                "show_submit_code_area": show_submit_code_area,
-                                                               "fuckingProblem": problem.input_description != u"None",
-                                                               "fuckingProblem2": problem.output_description != u"None",
+                                                               "fuckingProblem": problem.input_description == u"None",
+                                                               "fuckingProblem2": problem.output_description == u"None",
                                                                })
 
 

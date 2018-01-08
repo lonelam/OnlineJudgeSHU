@@ -1,12 +1,12 @@
 <div class="problem-section">
-            {% if fuckingProblem %}
+            {% if not fuckingProblem %}
                 <label class="problem-label">描述</label>
             {% endif %}
 
             <div class="problem-detail">{{ problem.description|safe }}</div>
             </div>
 
-            {% if fuckingProblem2 %}
+            {% if not fuckingProblem2 %}
             <div class="problem-section">
                 <label class="problem-label">输入</label>
                 <p class="problem-detail">{{ problem.input_description|safe }}</p>
@@ -18,7 +18,7 @@
             </div>
                 {%  endif %}
             {% for item in samples %}
-{% if fuckingProblem2 %}
+{% if not fuckingProblem2 %}
                 <div class="problem-section">
                     <label class="problem-label">样例输入{{ forloop.counter }}</label>
                     <a href="javascript:void(0)" class="copy-sample" data-clipboard-text="{{ item.input }}">复制</a>
