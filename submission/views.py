@@ -136,8 +136,8 @@ class ContestSubmissionAPIView(APIView):
         request_serializer: CreateContestSubmissionSerializer
         """
         serializer = CreateContestSubmissionSerializer(data=request.data)
-        if datetime.datetime.now().hour <= 6:
-            return error_response("时间晚了，去休息把\n")
+        if request.user.admin_type != SUPER_ADMIN and datetime.datetime.now().hour <= 6 :
+            return error_response("时间晚了，去休息吧\n")
         if serializer.is_valid():
             data = serializer.data
             contest = Contest.objects.get(id=data["contest_id"])
