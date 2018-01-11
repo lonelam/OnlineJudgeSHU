@@ -58,9 +58,6 @@
                                     {% if show_real_name %}
                                         （{{ item.user__real_name }}）
                                     {% endif %}
-                                    {% if force_real_time_rank %}
-                                        （{{ item.user__real_name }}）
-                                    {% endif %}
                                 </td>
                                 <td>{{ item.total_ac_number }} / {{ item.total_submission_number }}</td>
                                 <td>{% if item.total_time %}{{ item.total_time|format_seconds }}{% else %}--{% endif %}</td>
