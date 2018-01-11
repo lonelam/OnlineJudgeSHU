@@ -98,7 +98,7 @@ class ContestRank(models.Model):
 
         if User.objects.get(id=submission.user_id).admin_type == SUPER_ADMIN:
             logger.warning("SUPER_ADMIN is cheating in the contest!")
-            return
+            # return
 
         if submission.result == result["system_error"]:
             logger.warning("submission " + submission.id + " result is system error, update rank operation is ignored")
