@@ -300,14 +300,20 @@ def submission_list_page(request, page=1):
             problem = Problem.objects.get(id=problem_id)
             cache_result["problem"][problem_id] = problem.title
         item["title"] = cache_result["problem"][problem_id]
-        item["sort_id"] = submission_size - iterno + paginator.per_page * (int(page)-1)
+        item["sort_id"] = submission_size - iterno - paginator.per_page * (int(page) - 1)
 
         user_id = item["user_id"]
         if user_id not in cache_result["user"]:
             user = User.objects.get(id=user_id)
             cache_result["user"][user_id] = user
         item["user"] = cache_result["user"][user_id]
-        item["show_link"] = True
+        # 超级管理员显示全部链接
+        # 普通用户显示自己提交的链接
+        if item["user_id"] == request.user.id or request.user.admin_type == SUPER_ADMIN
+            item["show_link"] = True
+        else
+            item["show_link"] = False
+        
 
     previous_page = next_page = None
     try:
