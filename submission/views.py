@@ -311,7 +311,7 @@ def submission_list_page(request, page=1):
         # 普通用户显示自己提交的链接
         if item["user_id"] == request.user.id or request.user.admin_type == SUPER_ADMIN :
             item["show_link"] = True
-        else
+        else :
             item["show_link"] = False
         
 
