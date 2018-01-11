@@ -103,6 +103,10 @@ class ContestRank(models.Model):
         if submission.result == result["system_error"]:
             logger.warning("submission " + submission.id + " result is system error, update rank operation is ignored")
             return
+        
+        # 编译错误不罚时
+        if submission.result == result["compile_error"]:
+            return
 
         # 这道题以前提交过
         if str(submission.problem_id) in self.submission_info:
