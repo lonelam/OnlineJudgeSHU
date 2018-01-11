@@ -300,7 +300,7 @@ def submission_list_page(request, page=1):
             problem = Problem.objects.get(id=problem_id)
             cache_result["problem"][problem_id] = problem.title
         item["title"] = cache_result["problem"][problem_id]
-        item["sort_id"] = iterno + paginator.per_page * (int(page) - 1)
+        item["sort_id"] = iterno + paginator.per_page * (int(page) - 1) + 1
 
         user_id = item["user_id"]
         if user_id not in cache_result["user"]:
