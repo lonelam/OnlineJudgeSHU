@@ -5,7 +5,7 @@ from .models import User, UserProfile, UserPrefix
 
 class UserPrefixSerializer(serializers.Serializer):
     prefixname = serializers.CharField(max_length=10)
-    groupname = serializers.CharField(max_length=30)
+    groupname = serializers.CharField(allow_blank=True, max_length=30)
     amount = serializers.IntegerField(min_value=1, max_value=999)
 
 class UserLoginSerializer(serializers.Serializer):
