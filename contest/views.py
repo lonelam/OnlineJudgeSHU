@@ -609,6 +609,8 @@ def _get_rank(contest_id):
     rank_number = 1
     for item in rank:
         # 只有有ac的题目而且不是打星的队伍才参与排名
+        if User.objects.get(id=item["user__id"]).admin_type==SUPER_ADMIN:
+            continue
         if item["total_ac_number"] > 0 and item["user__real_name"][0] != "*":
             item["rank_number"] = rank_number
             rank_number += 1
