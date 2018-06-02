@@ -309,9 +309,13 @@ def submission_list_page(request, page=1):
         item["user"] = cache_result["user"][user_id]
         # 超级管理员显示全部链接
         # 普通用户显示自己提交的链接
-        if item["user_id"] == request.user.id or request.user.admin_type == SUPER_ADMIN :
-            item["show_link"] = True
-        else :
+        # 未登录的情况下不显示链接
+        try:
+            if item["user_id"] == request.user.id or request.user.admin_type == SUPER_ADMIN :
+                item["show_link"] = True
+            else :
+                item["show_link"] = False
+        except:
             item["show_link"] = False
         
 
