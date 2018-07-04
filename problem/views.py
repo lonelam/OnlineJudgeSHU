@@ -273,7 +273,10 @@ class TestCaseUploadAPIView(APIView):
         # 得到了合法的测试用例文件列表 然后去解压缩
         os.mkdir(test_case_dir)
         for i, name in enumerate(name_list):
-            f = open(os.path.join(test_case_dir, str(i/2 + 1) + ('.out' if i & 1 else '.in')), "wb")
+            if not spj:
+                f = open(os.path.join(test_case_dir, str(i/2 + 1) + ('.out' if i & 1 else '.in')), "wb")
+            else:
+                f = open(os.path.join(test_case_dir, name), "wb")
             try:
                 f.write(test_case_file.read(name).replace("\r\n", "\n"))
             except MemoryError:
