@@ -105,8 +105,8 @@ def check_user_contest_permission(func):
                               {"reason": "contest_not_start", "show_tab": False, "contest": contest})
 
         # 比赛已经结束了，只拦截 ajax 的答案提交
-        if contest.status == CONTEST_ENDED and request.path == reverse("contest_submission_api") and request.is_ajax():
-            return error_response(u"比赛已经结束")
+        # if contest.status == CONTEST_ENDED and request.path == reverse("contest_submission_api") and request.is_ajax():
+        #     return error_response(u"比赛已经结束")
 
         return func(*args, **kwargs)
 
