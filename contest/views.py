@@ -526,6 +526,7 @@ def contest_problem_page(request, contest_id, contest_problem_id):
 
     show_submit_code_area = False
     if contest.status == CONTEST_UNDERWAY or \
+                    contest.status == CONTEST_ENDED or \
                     request.user.admin_type == SUPER_ADMIN or \
                     request.user == contest.created_by:
         show_submit_code_area = True
