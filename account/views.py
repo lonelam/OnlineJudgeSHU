@@ -137,9 +137,9 @@ class UserPswResetAPIView(APIView):
             return error_response("组名不能为空，请重新提交")
 
         try:
-            tarGroup = Group.objects.get(name=)
+            tarGroup = Group.objects.get(name=groupname)
         except:
-            tarGroup = Group.objects.create(name=request.data["groupname"], created_by=request.user)
+            tarGroup = Group.objects.create(name=groupname, created_by=request.user)
 
         for userName in nodes:
             password = rand_str(6)
