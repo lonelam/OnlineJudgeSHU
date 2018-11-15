@@ -1,8 +1,8 @@
 require(["jquery", "avalon", "csrfToken", "bsAlert", "pager", "validator"],
     function ($, avalon, csrfTokenHeader, bsAlert) {
         avalon.ready(function () {
-            if (avalon.vmodels.userAdd) {
-                var vm = avalon.vmodels.userAdd;
+            if (avalon.vmodels.userPswReset) {
+                var vm = avalon.vmodels.userPswReset;
             }
             else {
                 var vm = avalon.define({
