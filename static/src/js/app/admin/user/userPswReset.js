@@ -15,7 +15,7 @@ require(["jquery", "avalon", "csrfToken", "bsAlert", "pager", "validator"],
                     groupname: "",
                     amount : 0,
                     userId: -1,
-                    generate: function(){
+                    upload: function(){
                         var url = "/api/admin/pswreset/";
                         $.ajax({
                             beforeSend: csrfTokenHeader,
