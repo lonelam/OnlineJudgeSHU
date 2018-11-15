@@ -132,6 +132,15 @@ class UserPswResetAPIView(APIView):
         UserSet = set()
         output = []
 
+        groupname = request.data["groupname"].strip()
+        if groupname == "":
+            return error_response("组名不能为空，请重新提交")
+
+        try:
+            tarGroup = Group.objects.get(name=)
+        except:
+            tarGroup = Group.objects.create(name=request.data["groupname"], created_by=request.user)
+
         for userName in nodes:
             password = rand_str(6)
             try:
@@ -145,10 +154,11 @@ class UserPswResetAPIView(APIView):
                 user.save()
                 UserProfile.objects.create(user=user, school="unknown", student_id=9527)
             user.tps = password
+            UserGroupRelation.objects.get_or_create(group=tarGroup, user=user)
             output.append(user)
 
         rendered = render(request, "oj/account/output.html", {"output": output})
-        return success_response({"content":rendered.content})
+        return success_response({"content" : rendered.content})
 
 class UserGenerateAPIView(APIView):
     @super_admin_required

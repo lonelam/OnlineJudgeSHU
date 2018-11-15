@@ -22,7 +22,7 @@ require(["jquery", "avalon", "csrfToken", "bsAlert", "pager", "validator"],
                             url: url,
                             dataType: "json",
                             method: "post",
-                            data: {"updata": vm.updata},
+                            data: {"updata": vm.updata, "groupname":vm.groupname},
                             success: function(data)
                             {
                                 if (data.code){
