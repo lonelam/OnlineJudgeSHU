@@ -32,7 +32,7 @@ require(["jquery", "avalon", "csrfToken", "bsAlert", "bootstrap"], function ($, 
                 children: [{name: "公告管理", hash: "#announcement/announcement"},
                     {name: "用户管理", hash: "#user/user_list"},
                     {name: "用户批量添加", hash: "#user/user_add"},
-                    {name: "批量重置密码", hash : "#user/pswreset"}
+                    {name: "批量重置密码", hash : "#user/user_psw_reset"}
                 ]
             },
             {
