@@ -1,0 +1,20 @@
+<meta charset="utf-8">
+<div ms-controller="userPswReset" class="col-md-9">
+    <h1>用户密码批量重置(慎用)</h1>
+
+    <table name="checktable" class="table table-striped">
+            <tr>
+                <th>ID</th>
+                <th>用户名</th>
+                <th>密码</th>
+                <th>电子邮箱</th>
+            </tr>
+    </table>
+    <form class = "form-inline">
+        <label>用户名列表</label>
+        <label>后台没有很好地进行错误检查！所以请保证输入正确性，空格、回车和Tab是用户名之间的分隔符</label>
+        <textarea name="area1" style="width: 100%;height: 250px;" ms-duplex="updata" />
+        <input type="submit" value = "upload" class = "btn btn-primary" ms-click = "upload()">
+    </form>
+</div>
+<script src="/static/js/app/admin/user/userPswReset.js"></script>

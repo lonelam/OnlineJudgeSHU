@@ -121,6 +121,35 @@ class UserLoadAPIView(APIView):
         rendered = render(request, "oj/account/output.html", {"output": output})
         return success_response({"content":rendered.content})
 
+class UserPswResetAPIView(APIView):
+    @super_admin_required
+    def post(self, request):
+        """
+        批量重置密码
+        """
+        text = request.data["updata"]
+        nodes = text.split()
+        UserSet = set()
+        output = []
+
+        for userName in nodes:
+            password = rand_str(6)
+            try:
+                user = User.objects.get(username=userName)
+                user.set_password(password)
+                user.save()
+            except User.DoesNotExist:
+                email = userName + "@acmoj.temp"
+                user = User.objects.create(username=userName, real_name=userName, email=email)
+                user.set_password(password)
+                user.save()
+                UserProfile.objects.create(user=user, school="unknown", student_id=9527)
+            user.tps = password
+            output.append(user)
+
+        rendered = render(request, "oj/account/output.html", {"output": output})
+        return success_response({"content":rendered.content})
+
 class UserGenerateAPIView(APIView):
     @super_admin_required
     def post(self, request):
