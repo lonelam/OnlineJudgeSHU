@@ -1,0 +1,14 @@
+django==1.9.6
+redis
+django-redis-sessions
+djangorestframework==3.3.3
+django-rest-swagger==2.0.2
+gunicorn
+coverage
+django-extensions
+supervisor
+pillow
+jsonfield
+Envelopes
+celery==4.1.0
+qrcode

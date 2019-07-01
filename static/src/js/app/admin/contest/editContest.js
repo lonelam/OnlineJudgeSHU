@@ -46,6 +46,7 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert", "csrfToken", "date
                     bsAlert("比赛描述不能为空!");
                     return false;
                 }
+                var suc = false;
                 $.ajax({
                     url: "/api/admin/contest/",
                     dataType: "json",
@@ -60,8 +61,28 @@ require(["jquery", "avalon", "editor", "uploader", "bsAlert", "csrfToken", "date
                         else {
                             bsAlert(data.data);
                         }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("put请求失败：[" + textStatus + "]" + errorThrown)
+                        $.ajax({
+                        url: "/api/admin/contest/put",
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        data: JSON.stringify(ajaxData),
+                        method: "post",
+                        success: function (data) {
+                            if (!data.code) {
+                                bsAlert("修改成功！");
+                                vm.showContestListPage();
+                            }
+                            else {
+                                bsAlert(data.data);
+                            }
+                        }
+                    });
                     }
                 });
+
             }
             return false;
         });

@@ -31,6 +31,151 @@ from .serializers import (CreateContestSerializer, ContestSerializer, EditContes
                           ContestPasswordVerifySerializer,
                           EditContestProblemSerializer)
 
+class ContestAdminPostView(APIView):
+
+    def post(self, request):
+        """
+        比赛编辑json api接口
+        ---
+        request_serializer: EditContestSerializer
+        response_serializer: ContestSerializer
+        """
+        serializer = EditContestSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            groups = []
+            try:
+                # 超级管理员可以编辑所有的
+                contest = Contest.objects.get(id=data["id"])
+                if request.user.admin_type != SUPER_ADMIN:
+                    contest_set = Contest.objects.filter(groups__in=request.user.managed_groups.all())
+                    if contest not in contest_set:
+                        return error_response(u"无权访问！")
+            except Contest.DoesNotExist:
+                return error_response(u"该比赛不存在！")
+            try:
+                contest = Contest.objects.get(title=data["title"])
+                if contest.id != data["id"]:
+                    return error_response(u"该比赛名称已经存在")
+            except Contest.DoesNotExist:
+                pass
+            if data["contest_type"] in [PUBLIC_CONTEST, PASSWORD_PROTECTED_CONTEST]:
+                if request.user.admin_type != SUPER_ADMIN:
+                    return error_response(u"只有超级管理员才可创建公开赛")
+            if data["contest_type"] == PASSWORD_PROTECTED_CONTEST:
+                if not data["password"]:
+                    return error_response(u"此比赛为有密码的公开赛，密码不可为空")
+            elif data["contest_type"] in [GROUP_CONTEST, PASSWORD_PROTECTED_GROUP_CONTEST]:
+                if request.user.admin_type == SUPER_ADMIN:
+                    groups = Group.objects.filter(id__in=data["groups"])
+                else:
+                    groups = Group.objects.filter(id__in=data["groups"], admin=request.user)
+                if not groups.count():
+                    return error_response(u"请至少选择一个小组")
+            if data["start_time"] >= data["end_time"]:
+                return error_response(u"比赛的开始时间必须早于比赛结束的时间")
+
+            # 之前是封榜，现在要开放，需要清除缓存
+            if contest.real_time_rank == False and data["real_time_rank"] == True:
+                r = get_cache_redis()
+                cache_key = str(contest.id) + "_rank_cache"
+                r.delete(cache_key)
+
+            contest.title = data["title"]
+            contest.description = data["description"]
+            contest.contest_type = data["contest_type"]
+            contest.real_time_rank = data["real_time_rank"]
+            contest.start_time = dateparse.parse_datetime(data["start_time"])
+            contest.end_time = dateparse.parse_datetime(data["end_time"])
+            contest.visible = data["visible"]
+            contest.password = data["password"]
+
+
+            contest.groups.clear()
+            contest.groups.add(*groups)
+            #把题目逐个加入，如果已经存在对应contestproblem，那就创建title不同的备份
+            #try:
+            # problem_list = data["problems"]
+            # if problem_list == None or problem_list == "":
+            #     contest.save()
+            #     return success_response(ContestSerializer(contest).data)
+            # problem_list = problem_list.split(',')
+            # contest_problem_list = ContestProblem.objects.filter(contest=contest, visible=True).select_related(
+            #     "contest").order_by("sort_index")
+            # if len(problem_list) > 26:
+            #     return error_response(u"太多题目啦，添加失败")
+            # sort_id = 'A'
+            # for problem_id in problem_list:
+            #     pid = int(problem_id)
+            #     linked_problem = Problem.objects.get(id=pid)
+            #     linked_problem.visible = False
+            #     linked_problem.save()
+            #     titled = ContestProblem.objects.filter(title=linked_problem.title)
+            #     if titled.count() == 0:
+            #         contest_problem = ContestProblem.objects.create(title=linked_problem.title,
+            #                 description=linked_problem.description,
+            #                 input_description=linked_problem.input_description,
+            #                 output_description=linked_problem.output_description,
+            #                 test_case_id=linked_problem.test_case_id,
+            #                 samples=linked_problem.samples,
+            #                 time_limit=linked_problem.time_limit,
+            #                 memory_limit=linked_problem.memory_limit,
+            #                 spj=linked_problem.spj,
+            #                 spj_language=linked_problem.spj_language,
+            #                 spj_code=linked_problem.spj_code,
+            #                 spj_version=linked_problem.spj_version,
+            #                 created_by=request.user,
+            #                 hint=linked_problem.hint,
+            #                 contest=contest,
+            #                 sort_index=sort_id,
+            #                 is_public=True
+            #                 )
+            #     else:
+            #         is_include = False
+            #         for preproblems in titled:
+            #             if preproblems.contest == contest:
+            #                 is_include = True
+            #                 break
+            #         if not is_include:
+            #             titled = ContestProblem.objects.filter(title=linked_problem.title+ '('+contest.title + ')')
+            #             if titled.count():
+            #                 is_include = True
+            #         if not is_include:
+            #             contest_problem = ContestProblem.objects.create(title=linked_problem.title + '('+contest.title + ')',
+            #                 description=linked_problem.description,
+            #                 input_description=linked_problem.input_description,
+            #                 output_description=linked_problem.output_description,
+            #                 test_case_id=linked_problem.test_case_id,
+            #                 samples=linked_problem.samples,
+            #                 time_limit=linked_problem.time_limit,
+            #                 memory_limit=linked_problem.memory_limit,
+            #                 spj=linked_problem.spj,
+            #                 spj_language=linked_problem.spj_language,
+            #                 spj_code=linked_problem.spj_code,
+            #                 spj_version=linked_problem.spj_version,
+            #                 created_by=request.user,
+            #                 hint=linked_problem.hint,
+            #                 contest=contest,
+            #                 sort_index=sort_id,
+            #                 is_public=True
+            #                 )
+            #     sort_id = chr(ord(sort_id) + 1)
+            # for existed_problem in contest_problem_list:
+            #     existed_problem.sort_index = str(sort_id)
+            #     existed_problem.save()
+            #     if sort_id == 'Z':
+            #         sort_id = 0;
+            #     elif sort_id.isalpha():
+            #         sort_id = chr(ord(sort_id) + 1)
+            #     else:
+            #         sort_id += 1
+            contest.save()
+            # #except:
+            # #    contest.save()
+            # #    return success_response(u"比赛已是部分问题解析错误")
+            return success_response(ContestSerializer(contest).data)
+        else:
+            return serializer_invalid_response(serializer)
 
 class ContestAdminAPIView(APIView):
     def post(self, request):

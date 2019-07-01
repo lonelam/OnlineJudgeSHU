@@ -12,7 +12,7 @@ from account.views import (UserLoginAPIView, UsernameCheckAPIView, UserRegisterA
 
 from announcement.views import AnnouncementAdminAPIView
 
-from contest.views import (ContestAdminAPIView, ContestProblemAdminAPIView,
+from contest.views import (ContestAdminAPIView, ContestAdminPostView, ContestProblemAdminAPIView,
                            ContestPasswordVerifyAPIView, ContestTimeAPIView,
                            MakeContestProblemPublicAPIView)
 
@@ -59,6 +59,7 @@ urlpatterns = [
     url(r'^api/admin/upload_image/$', SimditorImageUploadAPIView.as_view(), name="simditor_upload_image"),
     url(r'^api/admin/announcement/$', AnnouncementAdminAPIView.as_view(), name="announcement_admin_api"),
     url(r'^api/admin/contest/$', ContestAdminAPIView.as_view(), name="contest_admin_api"),
+    url(r'^api/admin/contest/put$', ContestAdminPostView.as_view(), name="contest_admin_put_api"),
     url(r'^api/admin/user/$', UserAdminAPIView.as_view(), name="user_admin_api"),
     url(r'^api/admin/gen/$', UserGenerateAPIView.as_view(), name="user_generate_api"),
     url(r'^api/admin/upd/$', UserLoadAPIView.as_view(), name="user_load_api"),
