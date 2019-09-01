@@ -89,6 +89,8 @@ class UserLoadAPIView(APIView):
     def post(self, request):
         """
         批量导入用户json api接口
+        导入格式改为"用户名 真实姓名"，默认密码同用户名。
+        Fix by CSL
         """
         text = request.data["updata"]
         nodes = text.split()
@@ -99,7 +101,8 @@ class UserLoadAPIView(APIView):
                 UserSet.add((nodes[i - 1], nodes[i]))
         for userdata in UserSet:
             username = userdata[0]
-            password = userdata[1]
+            realname = userdata[1]
+            password = userdata[0]
             email = userdata[0] + "@acmoj.temp"
             try:
                 user = User.objects.get(username=username)
@@ -112,10 +115,10 @@ class UserLoadAPIView(APIView):
             except MultipleObjectsReturned:
                 continue
             except User.DoesNotExist:
-                user = User.objects.create(username=username, real_name=username, email=email)
+                user = User.objects.create(username=username, real_name=realname, email=email)
                 user.set_password(password)
                 user.save()
-                UserProfile.objects.create(user=user, school="unknown",student_id = 9527)
+                UserProfile.objects.create(user=user, school="unknown",student_id=username)
             user.tps = password
             output.append(user)
         rendered = render(request, "oj/account/output.html", {"output": output})
