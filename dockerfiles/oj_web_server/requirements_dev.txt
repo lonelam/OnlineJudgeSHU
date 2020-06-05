@@ -1,4 +1,4 @@
-django==1.9.6
+django==1.11.29
 redis
 django-redis-sessions
 djangorestframework==3.3.3
