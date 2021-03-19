@@ -1,7 +1,7 @@
 django==1.9.6
 redis
 django-redis-sessions
-djangorestframework==3.3.3
+djangorestframework==3.11.2
 django-rest-swagger==2.0.2
 gunicorn
 coverage
