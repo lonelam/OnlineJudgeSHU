@@ -1,4 +1,4 @@
-django==1.9.6
+django==2.2.24
 MySQL-python
 redis
 django-redis-sessions
