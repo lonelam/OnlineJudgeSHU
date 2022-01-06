@@ -10,5 +10,5 @@ supervisor
 pillow
 jsonfield
 Envelopes
-celery==4.1.0
+celery==5.2.2
 qrcode
